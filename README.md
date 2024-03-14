@@ -7,4 +7,5 @@
     #3 configure your DB MySQL
     #4 run: php artisan key:generate 
     #5 run: php artisan migrate:fresh 
+    #5 run: php artisan storage:link
     #6 run: php artisan serve 
