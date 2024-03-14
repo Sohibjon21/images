@@ -40,17 +40,27 @@ class FileController extends Controller
     public function store(Request $request)
     {
 
-        $files = $request->file('images');
-
-        if (empty($files)) {
+        if (!$request->hasFile('images')) {
             return response()->json([
                 'message' => 'no files'
             ]);
         }
 
+        if (count($request->file('images')) > 5) {
+            return redirect()->back()->with('error', 'max count is 5');
+        }
+
+        $files = $request->file('images');
+
         foreach ($files as $file) {
+
+            $mimeType = $file->getClientMimeType();
+
+            if (strpos($mimeType, 'image/') !== 0) {
+                return redirect()->back()->with('error', 'required images');
+            }
+
             $fileName = Str::lower(Str::ascii($file->getClientOriginalName()));
-            dump($fileName);
 
             $dublicateCount = Images::where('name', '=', $fileName)->get()->count();
 

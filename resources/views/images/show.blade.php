@@ -4,11 +4,12 @@
     <div class="row">
         <div class="col-12">
             <div class="row">
-                <div class="col-12">
-
+                <div class="col-1"></div>
+                <div class="col-3">
+                    <a href="{{ route('index') }}">Главная</a> / Галерея
                 </div>
             </div>
-
+            <br>
             <div class="card">
                 <div class="card-header bg-info">
                     <div class="row">
@@ -17,7 +18,8 @@
 
                         @if (request()->has('sort_by') && request()->get('sort_by') == 'name' && request()->get('value') == 'desc')
                             <div class="col-1">
-                                <a class="me-4" href= "{{ route('images.show', ['sort_by' => 'name', 'value' => 'asc']) }}">
+                                <a class="me-4"
+                                    href= "{{ route('images.show', ['sort_by' => 'name', 'value' => 'asc']) }}">
                                     <i class="fa fa-sort-amount-asc" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -76,9 +78,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <script></script>
 @endsection
