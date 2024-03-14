@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Images\DownloadZipRequest;
 use App\Http\Requests\Images\SortRequest;
-use App\Models\Images;
 use App\Services\Image\ImageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use ZipArchive;
+
 
 class FileController extends Controller
 {
