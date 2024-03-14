@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12">
+        <div class="col-11 m-auto">
             <div class="row">
                 <div class="col-1"></div>
                 <div class="col-3">
@@ -14,7 +14,8 @@
                 <div class="card-header bg-info">
                     <div class="row">
 
-                        Название
+                            Название
+                     
 
                         @if (request()->has('sort_by') && request()->get('sort_by') == 'name' && request()->get('value') == 'desc')
                             <div class="col-1">
