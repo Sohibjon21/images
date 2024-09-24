@@ -21,4 +21,3 @@ API
 |---------|--------------------|-----------------------|----------------|
 | GET     | /infos             | Get info all images   |                |
 | GET     | /info              | Get info image by id  | id (integer)   |
-|         |                    |                       |                |
