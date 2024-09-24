@@ -16,3 +16,12 @@ Configure your DB MySQL
     php artisan storage:link
 
     php artisan serve 
+
+
+    API 
+
+        POST            |   Test
+    |___________________|__________________________________
+    |                   |
+    |                   |
+    |                   |
