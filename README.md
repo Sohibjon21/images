@@ -11,8 +11,8 @@ Configure your DB MySQL
 
     php artisan key:generate 
 
-    php artisan migrate:fresh
+    php artisan migrate
     
     php artisan storage:link
-    
+
     php artisan serve 
