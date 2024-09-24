@@ -1,6 +1,3 @@
-requires 
-    php8.1
-
 For run project
 
     composer update
