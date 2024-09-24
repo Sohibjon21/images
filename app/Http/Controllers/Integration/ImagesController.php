@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Integration;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\getInfoByIdRequest;
 use App\Models\Images;
-use Illuminate\Http\Request;
 
 class ImagesController extends Controller
 {

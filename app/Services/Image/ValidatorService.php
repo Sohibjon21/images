@@ -2,20 +2,18 @@
 
 namespace App\Services\Image;
 
-use App\Models\Images;
-use Illuminate\Support\Str;
-use ZipArchive;
+use App\Services\Image\Interfaces\ValidatorInterface;
 
-class ValidatorService
+class ValidatorService implements ValidatorInterface
 {
-    public function checkHasFile($request)
+    public function checkHasFile($request): bool
     {
         if (!$request->hasFile('images')) {
-           return false;
+            return false;
         }
         return true;
     }
-    public function checkCountFiles($request)
+    public function checkCountFiles($request): bool
     {
         if (count($request->file('images')) > 5) {
             return false;

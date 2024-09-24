@@ -3,26 +3,24 @@
 namespace App\Services\Image;
 
 use App\Models\Images;
+use App\Services\Image\Interfaces\ImageInterface;
 use Illuminate\Support\Str;
 use ZipArchive;
 
-class ImageService
+class ImageService implements ImageInterface
 {
     protected $validatorService;
     public function __construct()
     {
         $this->validatorService = new ValidatorService;
     }
-    public function store($request)
+    public function store($request): bool
     {
-
-        if (!$this->validatorService->checkHasFile($request)) {
+        if (!$this->validatorService->checkHasFile($request))
             return false;
-        }
 
-        if (!$this->validatorService->checkCountFiles($request)) {
+        if (!$this->validatorService->checkCountFiles($request))
             return false;
-        }
 
         $files = $request->file('images');
         foreach ($files as $file) {
@@ -38,17 +36,17 @@ class ImageService
     public function generateFileName($file): string
     {
         $fileName = Str::lower(Str::ascii($file->getClientOriginalName()));
-
         $fileName = uniqid() . '_' . $fileName;
+
         return $fileName;
     }
 
-    public function storeImageToStorage($file, $fileName)
+    public function storeImageToStorage($file, $fileName): void
     {
         $file->storeAs('public/images', $fileName);
     }
 
-    public function storeToDb($fileName)
+    public function storeToDb(string $fileName): void
     {
         Images::create([
             'name' => $fileName,
@@ -58,21 +56,27 @@ class ImageService
     public function show($request)
     {
         $sort = $request->validated();
+        $images = $this->orderBy($sort);
 
-        $images = Images::orderBy('uploaded_date_time', 'desc')->get();;
-
-        if (isset($sort['sort_by'])) {
-            if ($sort['sort_by'] == 'name') {
-                $images = Images::orderBy('name', $sort['value'])->get();
-            }
-
-            if ($sort['sort_by'] == 'date_time') {
-                $images = Images::orderBy('uploaded_date_time', $sort['value'])->get();
-            }
-        }
         return $images;
     }
 
+    public function orderBy($sort)
+    {
+        $images = Images::orderBy('uploaded_date_time', 'desc')->get();
+        if (isset($sort['sort_by'])) {
+            switch ($sort['sort_by']) {
+                case 'name':
+                    $images = Images::orderBy('name', $sort['value'])->get();
+                    break;
+                case 'date_time':
+                    $images = Images::orderBy('uploaded_date_time', $sort['value'])->get();
+                    break;
+            }
+        }
+
+        return $images;
+    }
     public function downloadZip($request)
     {
         $data = $request->validated();
