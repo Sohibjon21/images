@@ -1,5 +1,5 @@
-#requires 
-    #php8.1
+requires 
+    php8.1
 
 #run project
     #1 run: composer update
