@@ -11,10 +11,12 @@ use Illuminate\Http\Request;
 class FileController extends Controller
 {
 
-    private function service()
-    {
-        return new ImageService;
+    private ImageService $service;
+ 
+    public function __construct(){
+        $this->service=new ImageService;
     }
+
     public function index()
     {
         return view('images.index');
@@ -22,14 +24,14 @@ class FileController extends Controller
 
     public function show(SortRequest $request)
     {
-        $images = $this->service()->show($request);
+        $images = $this->service->show($request);
 
         return view('images.show', compact('images'));
     }
 
     public function store(Request $request)
     {
-        $store = $this->service()->store($request);
+        $store = $this->service->store($request);
         if ($store) {
             return redirect()->route('images.show');
         }
@@ -43,7 +45,7 @@ class FileController extends Controller
     public function downloadZip(DownloadZipRequest $request)
     {
 
-        $zipFileForDownload = $this->service()->downloadZip($request);
+        $zipFileForDownload = $this->service->downloadZip($request);
 
         if (!$zipFileForDownload) {
             return response()->json([

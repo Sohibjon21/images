@@ -8,48 +8,53 @@ use ZipArchive;
 
 class ImageService
 {
+    protected $validatorService;
+    public function __construct()
+    {
+        $this->validatorService = new ValidatorService;
+    }
     public function store($request)
     {
-        if (!$request->hasFile('images')) {
-            return response()->json([
-                'message' => 'no files'
-            ]);
+
+        if (!$this->validatorService->checkHasFile($request)) {
+            return false;
         }
 
-        if (count($request->file('images')) > 5) {
-            return redirect()->back()->with('error', 'max count is 5');
+        if (!$this->validatorService->checkCountFiles($request)) {
+            return false;
         }
 
         $files = $request->file('images');
-
         foreach ($files as $file) {
-
-            $mimeType = $file->getClientMimeType();
-
-            if (strpos($mimeType, 'image/') !== 0) {
-                return redirect()->back()->with('error', 'required images');
-            }
-
-            $fileName = Str::lower(Str::ascii($file->getClientOriginalName()));
-
-            $dublicateCount = Images::where('name', '=', $fileName)->get()->count();
-
-            if ($dublicateCount > 0) {
-                $fileName = uniqid() . '_' . $fileName;
-            }
-
-            $file->storeAs('public/images', $fileName);
-
-
-            Images::create([
-                'name' => $fileName,
-                'uploaded_date_time' => NOW(),
-            ]);
+            $this->validatorService->checkMimeType($file);
+            $fileName = $this->generateFileName($file);
+            $this->storeImageToStorage($file, $fileName);
+            $this->storeToDb($fileName);
         }
 
         return true;
     }
 
+    public function generateFileName($file): string
+    {
+        $fileName = Str::lower(Str::ascii($file->getClientOriginalName()));
+
+        $fileName = uniqid() . '_' . $fileName;
+        return $fileName;
+    }
+
+    public function storeImageToStorage($file, $fileName)
+    {
+        $file->storeAs('public/images', $fileName);
+    }
+
+    public function storeToDb($fileName)
+    {
+        Images::create([
+            'name' => $fileName,
+            'uploaded_date_time' => NOW(),
+        ]);
+    }
     public function show($request)
     {
         $sort = $request->validated();

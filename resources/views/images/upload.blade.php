@@ -14,7 +14,7 @@
             <form action="{{ route('images.upload') }}" method="post" enctype="multipart/form-data"
                 onsubmit="return checkFilesCount()">
                 @csrf
-                <input type="file" name="images[]" id="imageInput" max="5" accept="image/*" multiple>
+                <input type="file" name="images[]" required id="imageInput" max="5" accept="image/*" multiple>
                 <input type="submit" value="Загрузить">
             </form>
         </div>

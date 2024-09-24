@@ -26,8 +26,6 @@ class ImagesController extends Controller
 
         $id = $data['id'];
         $image = Images::find($id);
-        $image->makeHidden(['created_at']);
-        $image->makeHidden(['updated_at']i);
         return response()->json([
             'info' => $image
         ]);
