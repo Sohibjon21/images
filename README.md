@@ -18,10 +18,10 @@ Configure your DB MySQL
     php artisan serve 
 
 
-    API 
+API 
 
-    |   POST            |   Test                                     |
-    |----------------------------------------------------------------|
-    |                   |                                            |
-    |                   |                                            |
-    |                   |                                            |
+| Method  | Url                | Description           | Params         |
+|---------|--------------------|-----------------------|----------------|
+| GET     | /infos             | Get info all images   |                |
+| GET     | /info              | Get info image by id  | id (integer)   |
+|         |                    |                       |                |
