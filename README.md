@@ -1,8 +1,8 @@
 requires 
     php8.1
 
-#run project
-    #1 run: composer update
+For run project
+    composer update
     #2 Windows: copy .env.example .env; Linux: cp .env.example .env
     #3 configure your DB MySQL
     #4 run: php artisan key:generate 
