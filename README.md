@@ -2,6 +2,7 @@ requires
     php8.1
 
 For run project
+
     composer update
     #2 Windows: copy .env.example .env; Linux: cp .env.example .env
     #3 configure your DB MySQL
